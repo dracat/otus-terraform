@@ -10,11 +10,11 @@ resource "kubernetes_namespace" "example_namespace" {
   }
 }
 
-resource "kubernetes_role" "rbac_anyone" {
+resource "kubernetes_role" "role-su" {
 
 
   metadata {
-    name        = "otus-homework-rbac_anyone"
+    name        = "role-su"
     namespace   = var.namespace
 
   }
@@ -24,6 +24,32 @@ resource "kubernetes_role" "rbac_anyone" {
     resources  = ["*"]
     verbs      = ["*"]
   }
+}
+
+resource "kubernetes_service_account" "acc" {
+  metadata {
+    name      = "admin"
+    namespace = var.namespace
+  }
+ 
+}
+resource "kubernetes_role_binding" "su-admin" {
+  metadata {
+    name    = "su-admin"
+    namespace = var.namespace
+  }
+  role_ref {
+    kind = "Role"
+    name = "role-su"
+    api_group = "rbac.authorization.k8s.io"
+    
+  }
+  subject {
+    name    = "admin"
+    kind = "ServiceAccount"
+    namespace = var.namespace
+  }
+  
 }
 
 variable "namespace" {
