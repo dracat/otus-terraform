@@ -6,7 +6,7 @@ provider "kubernetes" {
 
 resource "kubernetes_namespace" "example_namespace" {
   metadata {
-    name = "otus-sre-homework"
+    name = var.namespace
   }
 }
 
@@ -15,7 +15,7 @@ resource "kubernetes_role" "rbac_anyone" {
 
   metadata {
     name        = "otus-homework-rbac_anyone"
-    namespace   = "otus-sre-homework"
+    namespace   = var.namespace
 
   }
 
@@ -24,4 +24,8 @@ resource "kubernetes_role" "rbac_anyone" {
     resources  = ["*"]
     verbs      = ["*"]
   }
+}
+
+variable "namespace" {
+  type = string
 }
