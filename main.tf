@@ -6,6 +6,22 @@ provider "kubernetes" {
 
 resource "kubernetes_namespace" "example_namespace" {
   metadata {
-    name = "otus-homework"
+    name = "otus-sre-homework"
+  }
+}
+
+resource "kubernetes_role" "rbac_anyone" {
+
+
+  metadata {
+    name        = "otus-homework-rbac_anyone"
+    namespace   = "otus-sre-homework"
+
+  }
+
+  rule {
+    api_groups = ["*"]
+    resources  = ["*"]
+    verbs      = ["*"]
   }
 }
