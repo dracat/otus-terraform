@@ -1,1 +1,1 @@
-namespace   ="otus-sre-homework"
+namespace = "otus-sre-homework"
